@@ -54,7 +54,7 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             // Enable access to resources
             implementation(compose.components.resources)
@@ -67,6 +67,9 @@ kotlin {
             implementation("io.insert-koin:koin-compose")
             implementation("io.insert-koin:koin-compose-viewmodel")
             implementation("io.insert-koin:koin-compose-viewmodel-navigation")
+
+            // Multiplatform ViewModel
+            implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
