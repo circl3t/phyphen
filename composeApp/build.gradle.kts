@@ -2,6 +2,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -44,7 +45,8 @@ kotlin {
     
     sourceSets {
         val desktopMain by getting
-        
+        val desktopTest by getting
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -58,10 +60,36 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            val koinBom = "4.1.0-Beta1"
+            implementation(project.dependencies.platform("io.insert-koin:koin-bom:$koinBom"))
+            implementation("io.insert-koin:koin-compose")
+            implementation("io.insert-koin:koin-compose-viewmodel")
+            implementation("io.insert-koin:koin-compose-viewmodel-navigation")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+            dependencies {
+                // Koin Test features
+                testImplementation("io.insert-koin:koin-test")
+                // Koin for JUnit 4
+                testImplementation("io.insert-koin:koin-test-junit4")
+                // Koin for JUnit 5
+                testImplementation("io.insert-koin:koin-test-junit5")
+            }
+        }
+        desktopTest.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
+        androidTarget {
+            @OptIn(ExperimentalKotlinGradlePluginApi::class)
+            instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
         }
     }
 }
@@ -76,6 +104,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging {
         resources {
@@ -95,6 +124,14 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4-android:1.6.8")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.8")
+    // Koin Test features
+    testImplementation("io.insert-koin:koin-test:4.1.0-Beta1")
+    // Koin for JUnit 4
+    testImplementation("io.insert-koin:koin-test-junit4:4.1.0-Beta1")
+    // Koin for JUnit 5
+    testImplementation("io.insert-koin:koin-test-junit5:4.1.0-Beta1")
 }
 
 compose.desktop {
