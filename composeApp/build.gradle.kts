@@ -68,8 +68,8 @@ kotlin {
             implementation("io.insert-koin:koin-compose-viewmodel")
             implementation("io.insert-koin:koin-compose-viewmodel-navigation")
 
-            // Multiplatform ViewModel
-            implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
+            // Multiplatform ViewModel not used when koin is present
+            //implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -129,13 +129,6 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
     androidTestImplementation("androidx.compose.ui:ui-test-junit4-android:1.6.8")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.8")
-    // Koin Test features
-    testImplementation("io.insert-koin:koin-test:4.1.0-Beta1")
-    // Koin for JUnit 4
-    testImplementation("io.insert-koin:koin-test-junit4:4.1.0-Beta1")
-    // Koin for JUnit 5
-    testImplementation("io.insert-koin:koin-test-junit5:4.1.0-Beta1")
 }
 
 compose.desktop {
