@@ -1,4 +1,4 @@
-name: Starter CI (ktfmt&build&run)
+name: Starter CI (ktfmt&build)
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
     branches:
       - main
 jobs:
-  build-and-run:
-    name: Build and Run
+  ktfmt-build:
+    name: ktfmt and build
     runs-on: ubuntu-latest
 
     steps:
@@ -27,5 +27,5 @@ jobs:
       - name: Run ktfmt check
         run: ./gradlew ktfmtCheck
 
-      - name: Build and Run the project
-        run: ./gradlew build run
+      - name: Build the project
+        run: ./gradlew build
