@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -11,6 +12,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("com.ncorti.ktfmt.gradle") version "0.21.0"
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 kotlin {
@@ -68,8 +70,12 @@ kotlin {
             implementation("io.insert-koin:koin-compose-viewmodel")
             implementation("io.insert-koin:koin-compose-viewmodel-navigation")
 
+            //
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+            //implementation("androidx.navigation:navigation-compose:2.8.4")
             // Multiplatform ViewModel not used when koin is present
             //implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
+
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
