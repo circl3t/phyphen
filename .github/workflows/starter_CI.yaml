@@ -29,5 +29,3 @@ jobs:
 
       - name: Build and Run the project
         run: ./gradlew build run
-
-#trigger
