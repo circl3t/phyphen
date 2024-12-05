@@ -1,0 +1,30 @@
+name: Starter CI (only builds and runs)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build-and-run:
+    name: Build and Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: action/checkout@v4
+
+      - name: Set up JDK 18
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '18'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build and Run the project
+        run: ./gradlew build run
+
+
