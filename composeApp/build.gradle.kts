@@ -85,6 +85,7 @@ kotlin {
             implementation(kotlin("test"))
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
+            
             dependencies {
                 // Koin Test features
                 testImplementation("io.insert-koin:koin-test")
