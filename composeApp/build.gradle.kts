@@ -1,4 +1,3 @@
-import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -13,6 +12,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     id("com.ncorti.ktfmt.gradle") version "0.21.0"
     kotlin("plugin.serialization") version "2.1.0"
+    id("org.sonarqube") version "6.0.1.5171"
 }
 
 kotlin {
@@ -146,5 +146,13 @@ compose.desktop {
             packageName = "tb.circl3t.phyphen"
             packageVersion = "1.0.0"
         }
+    }
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "circl3t_phyphen")
+        property("sonar.organization", "circl3t")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
