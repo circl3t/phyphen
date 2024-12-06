@@ -9,7 +9,7 @@ on:
       - main
 jobs:
   ktfmt-build:
-    name: ktfmt and build
+    name: ktfmt and build and analyze
     runs-on: ubuntu-latest
 
     steps:
